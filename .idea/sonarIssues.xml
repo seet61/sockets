@@ -23,6 +23,36 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/ru/seet61/sockets/multithreads/MonoThreadClientHandler.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/ru/seet61/sockets/multithreads/MultiThreadServer.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/ru/seet61/sockets/tcp/multithreads/MonoThreadClientHandler.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/ru/seet61/sockets/tcp/multithreads/MultiThreadServer.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/ru/seet61/sockets/tcp/single/SingleClient.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/ru/seet61/sockets/tcp/single/SingleServer.java">
+          <value>
+            <set />
+          </value>
+        </entry>
       </map>
     </option>
   </component>

@@ -1,4 +1,4 @@
-package ru.seet61.sockets;
+package ru.seet61.sockets.tcp.single;
 
 import java.io.*;
 import java.net.ServerSocket;
