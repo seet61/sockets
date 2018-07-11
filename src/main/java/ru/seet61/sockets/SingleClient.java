@@ -8,28 +8,27 @@ public class SingleClient {
     private static final int PORT = 2018;
 
     public static void main(String[] args) {
-        try(Socket socket = new Socket("localhost", PORT);
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            DataInputStream dis = new DataInputStream(socket.getInputStream());
-            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+        try (Socket socket = new Socket("localhost", PORT);
+             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in))
         ) {
             System.out.println("Client connected to socket " + PORT);
-            System.out.print("client > ");
-            while (!socket.isOutputShutdown()) {
-                // ждём консоли клиента на предмет появления в ней данных
-                if (br.ready()) {
-                    System.out.print("client > ");
-                    String clentCommand = br.readLine();
-                    System.out.println();
-                    dos.writeUTF(clentCommand);
-                    dos.flush();
-                    // смотрим что нам ответил сервер
-                    System.out.println("server > " + dis.readUTF());
-                    if ("quit".equalsIgnoreCase(clentCommand)) {
-                        System.out.println("Client kill connections...");
-                        Thread.sleep(2000);
-                        break;
-                    }
+            while (socket.isConnected()) {
+                String line = null;
+                String answer = null;
+                System.out.print("client > ");
+                line = keyboard.readLine();
+                writer.write(line);
+                writer.newLine();
+                writer.flush();
+                if ((answer = reader.readLine()) != null) {
+                    System.out.println("server > " + answer);
+                }
+                if ("quit".equalsIgnoreCase(line)) {
+                    System.out.println("Exit!");
+                    Thread.sleep(1000);
+                    break;
                 }
             }
         } catch (UnknownHostException e) {

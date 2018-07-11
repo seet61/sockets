@@ -1,8 +1,6 @@
 package ru.seet61.sockets;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,25 +14,25 @@ public class SingleServer {
         System.out.println("Waiting for connection...");
         try(ServerSocket server = new ServerSocket(PORT);
             Socket client = server.accept();
-            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
-            DataInputStream dis = new DataInputStream(client.getInputStream());
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
         ) {
             System.out.println("Connection accepted from " + client.getInetAddress() + " " + client.getPort());
             // начинаем диалог с подключенным клиентом в цикле, пока сокет не закрыт
-            while(!client.isClosed()){
-                String entry = dis.readUTF();
-                System.out.println("client > " + entry);
+            while(client.isConnected()){
+                String line = reader.readLine();
+                System.out.println("client > " + line);
                 // Отправка сообщения клиенту
-                dos.writeUTF("Server reply - " + entry + " - OK" );
-                dos.flush();
-                System.out.println("Server reply - " + entry + " - OK" );
+                writer.write("Server reply - " + line + " - OK" );
+                writer.newLine();
+                writer.flush();
                 // инициализация проверки условия продолжения работы с клиентом по этому сокету по кодовому слову - quit
-                if ("quit".equalsIgnoreCase(entry)) {
+                if ("quit".equalsIgnoreCase(line)) {
                     Thread.sleep(3000);
                     break;
                 }
             }
-
+            System.out.println("Exit");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
